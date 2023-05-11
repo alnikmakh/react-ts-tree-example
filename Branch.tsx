@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { TOPICS, TopicEntity } from './topics';
 import { Link, useParams } from 'react-router-dom';
 import styles from './branch.module.css';
-import { selectBranchesStates, selectIsDragging, toggleBranch } from './slice';
+import {
+  selectBranchesStates,
+  selectIsDragging,
+  selectOverTopic,
+  toggleBranch,
+} from './slice';
 import { useDroppable, useDraggable } from '@dnd-kit/core';
 
 type BranchProps = {
@@ -22,6 +27,7 @@ export const Branch = ({ topic }: BranchProps) => {
   const { id } = useParams();
   const branchesStates = useSelector(selectBranchesStates);
   const isDragging = useSelector(selectIsDragging);
+  const overTopic = useSelector(selectOverTopic);
   const expanded = branchesStates[topic.id];
   const dragStyle = transform
     ? {
@@ -72,6 +78,7 @@ export const Branch = ({ topic }: BranchProps) => {
           paddingLeft: '20px',
           maxHeight: expanded ? '100vh' : '0',
           transition: 'max-height ease 0.4s',
+          border: overTopic === topic.id ? '1px solid black' : undefined,
           ...(expanded ? {} : { overflow: 'hidden' }),
         }}
         onTransitionEnd={(event) => {

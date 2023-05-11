@@ -2,7 +2,12 @@ import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import styles from './layout.module.css';
-import { selectTree, setOpenBranches, setIsDragging } from './slice';
+import {
+  selectTree,
+  setOpenBranches,
+  setIsDragging,
+  selectOverTopic,
+} from './slice';
 import { Branch } from './Branch';
 import { selectTreeIndexes } from './slice';
 import { DndContext } from '@dnd-kit/core';
@@ -14,6 +19,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const indexes = useSelector(selectTreeIndexes);
 
   const onDragOver = (event) => {
+    dispatch(selectOverTopic(event.over?.id));
     console.log(event.over?.id);
   };
   const onDragStart = (event) => {

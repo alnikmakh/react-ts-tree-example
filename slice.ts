@@ -8,6 +8,7 @@ const initialState = {
   editId: undefined,
   branchesStates: {},
   isDragging: false,
+  overTopic: '0',
 };
 
 const treeSlice = createSlice({
@@ -31,12 +32,19 @@ const treeSlice = createSlice({
     setIsDragging: (state, action: PayloadAction<string>) => {
       state.isDragging = action.payload;
     },
+    setOverTopic: (state, action: PayloadAction<string>) => {
+      state.overTopic = action.payload;
+    },
   },
 });
 
 export const { setTree, setOpenBranches, toggleBranch, setIsDragging } =
   treeSlice.actions;
 export default treeSlice.reducer;
+
+export const selectOverTopic = (state) => {
+  return state.tree.overTopic;
+};
 
 export const selectIsDragging = (state) => {
   return state.tree.isDragging;
